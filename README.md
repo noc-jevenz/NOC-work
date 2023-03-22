@@ -1,38 +1,18 @@
+from IPython.display import HTML, IFrame
 
-def backbone_backup_add(backbone_name):
-    if ";" in str(backbone_name):
-        backbone_list = str(backbone_name).split(';')
-        sum_list = []
-        for i in backbone_list:
-            if i == "":
-                continue
-            else:
-                if len(get_backbone_info_max(i)) > 0:
-                    bw = get_backbone_info_max(i)[0]
-                    sum_list.append(bw)
-                elif len(get_backbone_info_max(i)) == 0:
-                    print(i + '查不到骨干资料')
-                    sum_list.append(0)
-                else:
-                    return str(i+'错误')
-        res = sum(sum_list)
-        return res
-    elif "none" in str(backbone_name):
-        return "none"
-    elif "office" in str(backbone_name):
-        return "none"
-    elif "n/a" in str(backbone_name):
-        return "none"
-    elif "tunnel" in str(backbone_name):
-        return "none"
-    elif backbone_name == 0:
-        return "none"
-    else:
-        if len(get_backbone_info_max(backbone_name)) > 0:
-            bw = int(get_backbone_info_max(backbone_name)[0])
-            return bw
-        elif len(get_backbone_info_max(backbone_name)) == 0:
-            print(backbone_name + '查不到骨干资料')
-            return 0
+# 1. 将您的 API 密钥替换为 YOUR_API_KEY
+api_key = 'xxx'
 
+# 2. 构建嵌入式地图 URL
+location = '1600 Amphitheatre Parkway, Mountain View, CA'
+zoom_level = 16
+map_size = '600x300'
+map_type = 'roadmap'
+url = 'https://www.google.com/maps/embed/v1/place?key=%s&q=%s&zoom=%s&maptype=%s&size=%s'%(api_key,location,zoom_level,map_size,map_type)
 
+# 3. 创建一个 IFrame 对象，将地图 URL 作为 src 参数
+iframe = IFrame(url, width=map_size.split('x')[0], height=map_size.split('x')[1])
+
+# 4. 使用 HTML 类创建一个 HTML 对象，并将 IFrame 对象嵌入其中
+html = HTML('<h3>My Embedded Map</h3>')
+display(html, iframe)
